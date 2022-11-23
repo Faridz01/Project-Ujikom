@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('test', function () {
     return view('hallo');
+});
+
+// route admin
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], function () {
+    Route::get('/', function () {
+        return view('admin.index');
+    });
+    
+    Route::resource('barang',BarangController::class);
 });
